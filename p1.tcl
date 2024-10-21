@@ -38,14 +38,13 @@ $cbr1 set random_ null
 $ns at 1.0 "$cbr1 start"
 $ns at 2.0 "$cbr1 stop"
 proc finish {} {
-global ns tracefile namfile
-$ns flush
--trace
-close $tracefile
-close $namfile
-exec nam out.nam &
-exit 0 }
-#$ns at $val(stop) "$ns nam-end-wireless $val(stop)"
+    global ns tracefile namfile
+    $ns flush-trace
+    close $tracefile
+    close $namfile
+    exec nam out.nam &
+    exit 0
+}
 $ns at $stopTime "finish"
 puts "sim running..."
 $ns run
@@ -54,17 +53,21 @@ $ns run
 
 
 
+
 #awk
 BEGIN {
-cbrPkt=0;
-tcpPkt=0; }{
-if (($1=="d")&&($5=="cbr")){
-cbrPkt=CbrPkt+1; }
-if (($1=="d")&&($5=="tcp")){
-tcpPkt=tcpPkt+1; }}
+    cbrPkt = 0;
+    tcpPkt = 0;
+}
+{
+    if (($1 == "d") && ($5 == "cbr")) {
+        cbrPkt = cbrPkt + 1;
+    }
+    if (($1 == "d") && ($5 == "tcp")) {
+        tcpPkt = tcpPkt + 1;
+    }
+}
 END {
-printf
-"\n No. of CBR packets dropped %d",cbrPkt;
-printf
-"\n No. of TCP packets dropped %d",tcpPkt;
+    printf "\nNo. of CBR packets dropped: %d", cbrPkt;
+    printf "\nNo. of TCP packets dropped: %d", tcpPkt;
 }
