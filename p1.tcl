@@ -3,7 +3,7 @@ set stopTime 10.0
 set ns [new Simulator]
 set tracefile [open out.tr w]
 $ns trace-all $tracefile
-set namfile [open out.nam w]
+set namfile [open out.nam w]   //hello
 $ns namtrace-all $namfile
 set n0 [$ns node]
 set n1 [$ns node]
